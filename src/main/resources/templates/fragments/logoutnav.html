@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:fragment="logoutnav">
+    <nav class="navbar navbar-light navbar-expand-md fixed-top bg-light shadow pulse animated navigation-clean-button">
+        <div class="container"><img class="img-fluid visible" src="assets/img/logo.png" width="50" height="50">
+            <button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span
+                    class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navcol-1">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item"><a class="nav-link" href="#" th:href="@{/logout}">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">News</a></li>
+                    <li class="nav-item dropdown"><a class="dropdown-toggle nav-link" aria-expanded="false"
+                                                     data-toggle="dropdown" href="#">Other Links&nbsp;</a>
+                        <div class="dropdown-menu"><a class="dropdown-item" href="#">Covid-19 Vaccine Details</a><a
+                                class="dropdown-item" href="#">Motivation of the Day</a><a class="dropdown-item"
+                                                                                           href="#">Jokes of the Day</a>
+                        </div>
+                    </li>
+                </ul>
+                <div class="text-monospace bg-light mx-auto social-icons" id="divIcon"><a target="_blank" href="https://twitter.com/aditya_kumar109/"><i
+                        class="fab fa-twitter-square shadow-sm" data-bss-hover-animate="jello"></i></a><a target="_blank" href="https://www.facebook.com/aditya.bapun/"><i
+                        class="fab fa-facebook-square shadow-sm" data-bss-hover-animate="jello"></i></a><a target="_blank" href="https://www.snapchat.com/add/akumarbehera1"><i
+                        class="fab fa-snapchat-square shadow-sm" data-bss-hover-animate="jello"></i></a><a target="_blank" href="https://www.youtube.com/c/CraftyKiranPrava"><i
+                        class="fab fa-youtube shadow-sm" data-bss-hover-animate="jello"></i></a></div>
+                <span class="float-right navbar-text actions"> <a
+                        class="btn btn-light text-monospace shadow-sm action-button" role="button"
+                        data-bss-hover-animate="tada" href="#" th:href="@{/logout}"
+                        >Sign Out</a></span>
+            </div>
+        </div>
+    </nav>
+</div>
+</body>
+</html>

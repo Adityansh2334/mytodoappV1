@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+
+<body>
+<div th:fragment="viewDescription">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#"><span>Home</span></a></li>
+        <li class="breadcrumb-item"><a href="#"><span>Library</span></a></li>
+        <li class="breadcrumb-item"><a href="#"><span>Data</span></a></li>
+    </ol>
+    <section class="highlight-phone">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="intro"><img class="img-fluid border rounded-pill shadow-sm" th:src="${user.getUser_image()}" width="80" height="80">
+                        <div th:if="${#strings.contains('__${username}__',' ')}">
+                            <h2 th:text="'Hello! '+${#strings.arraySplit('__${username}__',' ')[0].toUpperCase()}"></h2>
+                        </div>
+                        <div th:if="not ${#strings.contains('__${username}__',' ')}">
+                            <h2 th:text="'Hello! '+${#strings.toUpperCase('__${username}__')} "></h2>
+                        </div>
+                        <p>Dear, User this space is for reading your notes. You can easily read your to-do, notes and tasks here. Also as per your need you can update or delete your data.</p><a class="btn btn-primary" role="button" href="#" th:href="@{/backtoView}">Back To List</a>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="d-none d-md-block phone-mockup"><img class="device" src="assets/img/pngfind.com-peyton-list-png-5020179.png"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="row clearmargin clearpadding row-image-txt"
+         style="color: white;
+                font-weight: bold;
+                margin: 0px;
+                padding: 0px;
+                background-color: rgb(42,42,42);">
+        <div  class="col-xs-12 col-sm-6 col-md-6 clearmargin clearpadding col-sm-push-6" style="background-image: url('https://images.pexels.com/photos/934062/pexels-photo-934062.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940');background-size: cover;height: 408px;background-position: center;margin: 0px;padding: 0px;">
+            <div></div>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-6 col-sm-pull-6" style="padding:20px;">
+            <h1>Description</h1>
+            <hr><textarea th:text="${userNote}" spellcheck="true" class="input-lg area-box-size" readonly style="resize: none;">
+            </textarea>
+            <div style="text-align:center">
+                <form style="display: inline-block;" onsubmit="return doCheckDelete()" action="#" th:action="@{/delete}">
+                    <input type="hidden" name="note_id" value="name" th:value="${noteId}">
+                <button type="submit" class="btn btn-danger" style="border: none;width: 108px;height: 40px;margin-left: 0;background-color: #d23350;color: rgb(255,255,255);margin-top: 12px;">Delete</button>
+                </form>
+                <form style="display: inline-block;" action="#" th:action="@{/update}">
+                <input type="hidden" name="note_id" value="name" th:value="${noteId}">
+                    <button type="submit"  class="btn btn-danger" style="border: none;width: 108px;height: 40px;margin-left: 14px;background-color: #384e78;color: rgb(255,255,255);margin-top: 12px;">Update</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script th:inline="javascript">
+        function doCheckDelete(){
+            return confirm("Do you want to delete the data?");
+        }
+    </script>
+</div>
+</body>
+
+</html>

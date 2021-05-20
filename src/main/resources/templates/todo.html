@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/fragments/header :: header">
+</head>
+<body>
+<div th:insert="'/fragments/'+${navbar} :: ${navbar}"></div>
+<div th:insert="'/views/'+${content} :: ${content}"></div>
+<div th:insert="/fragments/footer :: footer"></div>
+</body>
+</html>

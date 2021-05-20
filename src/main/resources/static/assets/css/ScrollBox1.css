@@ -1,0 +1,8 @@
+textarea.input-lg.area-box-size {
+    height: 300px;
+    width: 80%;
+    outline: none;
+    background-color: rgba(4,4,4, 0.8);
+    color: white;
+    border-color: black;
+}

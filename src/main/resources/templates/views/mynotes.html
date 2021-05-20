@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+
+<body>
+    <div th:fragment="mynotes">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#"><span>Home</span></a></li>
+            <li class="breadcrumb-item"><a href="#"><span>Library</span></a></li>
+            <li class="breadcrumb-item"><a href="#"><span>Data</span></a></li>
+        </ol>
+    <section class="highlight-phone">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="intro"><img class="img-fluid border rounded-pill shadow-sm" th:src="${user.getUser_image()}" width="80" height="80">
+                        <div th:if="${#strings.contains('__${username}__',' ')}">
+                            <h2 th:text="'Welcome '+${#strings.arraySplit('__${username}__',' ')[0].toUpperCase()}"></h2>
+                        </div>
+                        <div th:if="not ${#strings.contains('__${username}__',' ')}">
+                        <h2 th:text="'Welcome '+${#strings.toUpperCase('__${username}__')} "></h2>
+                        </div>
+                        <p>All your notes/ tasks/ to-do's are showing up in this window. Manage your To-do's now. If you are new here, you can add your new to-do by clicking below button.</p><a class="btn btn-primary" role="button" href="#" th:href="@{/addnewnote}">Add new note / to-do</a>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="d-none d-md-block phone-mockup"><img class="device" src="assets/img/pngfind.com-peyton-list-png-5020179.png"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col">
+                <h2 class="text-center">Your Notes List</h2>
+            </div>
+        </div>
+        <div class="card" id="TableSorterCard">
+            <div class="card-header py-3">
+                <div class="row table-topper align-items-center">
+                    <div class="col-12 col-sm-5 col-md-6 text-left" style="margin: 0px;padding: 5px 15px;">
+                        <p class="text-primary m-0 font-weight-bold">Manage All your added notes/ to-do's/ tasks&nbsp;</p>
+                    </div>
+                    <div class="col-12 col-sm-7 col-md-6 text-right" style="margin: 0px;padding: 5px 15px;"><a th:href="@{/showPriorityTasks}"><button class="btn btn-primary btn-sm reset" type="button" style="margin: 2px;">Show High Priority Tasks</button></a><a onclick=" return doCheck()" th:href="@{/deleteAllNotes}"><button  class="btn btn-primary btn-sm reset" type="button" style="margin: 2px;">Delete All Notes</button></a><button class="btn btn-warning btn-sm" id="zoom_in" type="button" zoomclick="ChangeZoomLevel(-10);" style="margin: 2px;"><i class="fa fa-search-plus"></i></button><button class="btn btn-warning btn-sm" id="zoom_out" type="button" zoomclick="ChangeZoomLevel(-10);" style="margin: 2px;"><i class="fa fa-search-minus"></i></button></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="table-responsive">
+                        <table class="table table-striped table tablesorter" id="ipi-table">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th class="text-center">ID</th>
+                                    <th class="text-center">Note Description</th>
+                                    <th class="text-center">Date of creation</th>
+                                    <th class="text-center">Target date</th>
+                                    <th class="text-center">Priority</th>
+                                    <th class="text-center filter-false sorter-false">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-center">
+                                <tr th:each="noteLs : ${noteList}">
+                                    <td  th:text="${noteLs.id}"></td>
+                                    <td class="text-center">
+                                        <textarea  disabled th:text="${noteLs.user_note}"></textarea>
+                                    </td>
+                                    <td  th:text="${noteLs.create_date}" class="text-center"></td>
+                                    <td  th:text="${noteLs.target_date}" class="text-center"></td>
+                                    <td  th:if="${noteLs.user_preference == 1}" class="text-center">
+                                        <p id="prferencePara"th:text="High"></p>
+                                    </td>
+                                    <td  th:if="${noteLs.user_preference == 2}" class="text-center">
+                                        <p th:text="Medium"></p>
+                                    </td>
+                                    <td  th:if="${noteLs.user_preference == 3}" class="text-center">
+                                        <p th:text="Low"></p>
+                                    </td>
+                                    <td class="text-center">
+                                        <form action="#" th:action="@{/showingDescriptionData}" method="get">
+                                            <input type="hidden" name="note_id" value="name" th:value="${noteLs.id}">
+                                        <button type="submit" role="button"  class="btn btn-primary" style="margin: 2px;"><i class="far fa-eye"></i></button>
+                                        </form>
+
+                                        <form action="#" th:action="@{/update}" >
+                                            <input type="hidden" name="note_id" value="name" th:value="${noteLs.id}">
+                                            <button type="submit" class="btn btn-success"  style="background: rgb(11,171,56);margin: 2px;"><i class="fas fa-pencil-alt"></i></button>
+                                        </form>
+
+                                        <form action="#" th:action="@{/delete}" onsubmit=" return doCheck()">
+                                            <input type="hidden" name="note_id" value="name" th:value="${noteLs.id}">
+                                            <button class="btn btn-danger" type="submit" style="margin: 2px;"><i class="fas fa-trash"></i></button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        <script th:inline="javascript">
+            function doCheck(){
+                return confirm("Do you want to delete the data?");
+            }
+        </script>
+<!--        <script th:inline="javascript">-->
+<!--            function openView(){-->
+<!--                // var elements = document.getElementById("modalForm").elements;-->
+<!--                // var obj ={};-->
+<!--                // for(var i = 0 ; i < elements.length ; i++){-->
+<!--                //     var item = elements.item(i);-->
+<!--                //     obj[item.name] = item.value;-->
+<!--                // }-->
+<!--                // $(document).ready(function() {-->
+<!--                       $(this).click(function (e) {-->
+<!--                           var $td = $(e.target).closest("td");-->
+<!--                           // var currentCellText = $(this).text();-->
+<!--                           var LeftCellText = $td.prev().prev().prev().prev().text();-->
+<!--                           console.log(LeftCellText);-->
+<!--                           $('#user_note_value').text('').append(LeftCellText);-->
+<!--                           $('#exampleModal').modal('toggle');-->
+<!--                       });-->
+<!--                // });-->
+<!--                // document.getElementById("user_note_value").innerHTML= JSON.stringify(obj['input']);-->
+
+
+<!--            }-->
+<!--        </script>-->
+
+    </div>
+
+</body>
+
+</html>

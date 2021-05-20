@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="/fragments/header :: header">
+</head>
+<body>
+    <div th:insert="'/fragments/'+${navbar} :: ${navbar}"></div>
+    <div th:insert="'/views/'+${content} :: ${content} "></div>
+    <section id="loginsec" class="login-dark" style="background: url(&quot;assets/img/RE4wtcU.jpeg&quot;);height: 680px;">
+        <form th:action="@{/signin}" th:object="${loginValue}" onsubmit="document.getElementById('btn1').classList.toggle('btnSub')" method="post" style="background: rgba(0,0,0,0.6);">
+            <h2 class="sr-only">Login Form</h2>
+            <div class="illustration"><i class="fa fa-user-lock"></i></div>
+            <div class="form-group"><input class="form-control" type="text" th:field="*{username}" name="username" placeholder="Email/ Phone Number" required=""></div>
+            <div class="form-group"><input class="form-control" type="password" th:field="*{password}" name="password" placeholder="Password" minlength="8"  required=""></div>
+            <div class="form-group"><button id="btn1" class="btn btn-primary btn-block" type="submit"><span class="span1">Log-In</span></button></div><a class="forgot" href="#">Forgot your email or password?</a>
+        </form>
+    </section>
+<!--    Modal For SignUp-->
+    <div class="modal fade" role="dialog" tabindex="-1" id="signin" style="opacity: 1;filter: blur(0px);">
+        <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header" style="opacity: 1;background: #e6e4e4;">
+                    <h4 class="modal-title">Sign Up Now</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                </div>
+                <div class="modal-body" style="background: rgba(0,0,0,0.1);">
+                    <form th:action="@{/signup}" th:object="${userForm}"  id="signup" method="post" class="mt-4" enctype="multipart/form-data" >
+                        <div class="d-inline" style="width: 200px;">
+                            <div class="text-center"><label id="user_group_label" for="user_group_logo"><i class="fas fa-upload"></i>&nbsp;Choose an image...</label></div>
+                        </div>
+                        <hr>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-prepend"><span class="text-primary input-group-text"><i class="fas fa-user-circle"></i></span></div><input id="userNameInput"class="form-control" type="text" th:field="*{user_name}" placeholder="Full Name"  name="user_name" required>
+                                <div class="input-group-append" ></div>
+
+<!--                                <div th:if="${#fields.hasErrors('user_name')}" th:errors="*{user_name}" class="text-danger">-->
+<!--                                    Valid name is required...-->
+<!--                                </div>-->
+                            </div>
+                            <small class="signUpCheckText"> </small>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-prepend"><span class="text-primary input-group-text"><i class="fas fa-at"></i></span></div><input id="userEmailInput" class="form-control" type="text" required="" th:field="*{user_emai_ph}" placeholder="Email / Mobile Number" name="user_emai_ph">
+                                <div class="input-group-append" ></div>
+                            </div>
+                            <small class="signUpCheckText"></small>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-prepend"><span class="text-primary input-group-text"><i class="fa fa-lock"></i></span></div><input id="userPassInput1" class="form-control" type="password" required="" th:field="*{user_password}" placeholder="Password" minlength="8"  name="user_password">
+                                <div class="input-group-append" ></div>
+<!--                                <div th:if="${#fields.hasErrors('user_password')}" th:errors="*{user_password}" class="text-danger">-->
+<!--                                    Valid password is required...-->
+<!--                                </div>-->
+                            </div>
+                            <small class="signUpCheckText"></small>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-prepend"><span class="text-primary input-group-text"><i class="fa fa-lock"></i></span></div><input id="userPassInput2" class="form-control" type="password" required=""  placeholder="Confirm Password" minlength="8"  name="confirm_password">
+                                <div class="input-group-append" ></div>
+                            </div>
+                            <small class="signUpCheckText"></small>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-1" required="" checked=""><label class="form-check-label" for="formCheck-1">I agree all the terms and conditions.</label></div>
+                        </div>
+                        <div class="form-group"><input class="form-control-file sr-only invisible custom-file-input" type="file" id="user_group_logo" accept="image/*" name="image">
+                            <button id="btn2" onclick="btnAnim()" class="btn btn-primary btn-lg text-white bg-dark border-info shadow-sm" style="width: 100%;" type="submit"><span class="span1">Sign Up</span></button>
+                        </div>
+                    </form>
+                    <hr style="background-color: #bababa;">
+                    <p class="text-center">Already have an Account?&nbsp;<a id="login1" class="text-decoration-none" href="#loginsec">Log In</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+<!--    END HERE-->
+<!--    MODAL FOR SHOW UP-->
+    <div th:fragment="extramodal" id="modal-open">
+        <div class="modal fade" role="dialog" tabindex="-1" id="exampleModal" aria-labelledby="exampleModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Information</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <p id="details" th:text="${Msg}"></p>
+                    </div>
+                    <div class="modal-footer"><button class="btn btn-warning" data-dismiss="modal" style="background-color:rgb(255,139,160);" type="button">Close</button></div>
+                </div>
+            </div>
+        </div>
+    </div>
+<!--    END HERE-->
+<!--    INLINE JS FOR SIGNUP FORM-->
+    <script th:inline="javascript">
+
+        //START
+        const usernameEl = document.querySelector('#userNameInput');
+        const emailEl = document.querySelector('#userEmailInput');
+        const passwordEl = document.querySelector('#userPassInput1');
+        const confirmPasswordEl = document.querySelector('#userPassInput2');
+        const form = document.querySelector('#signup');
+
+
+        form.addEventListener('submit', function (e) {
+            // prevent the form from submitting
+            e.preventDefault();
+
+            const debounce = (fn, delay = 500) => {
+                let timeoutId;
+                return (...args) => {
+                    // cancel the previous timer
+                    if (timeoutId) {
+                        clearTimeout(timeoutId);
+                    }
+                    // setup a new timer
+                    timeoutId = setTimeout(() => {
+                        fn.apply(null, args)
+                    }, delay);
+                };
+            };
+
+            form.addEventListener('input', debounce(function (e) {
+                switch (e.target.id) {
+                    case 'username':
+                        checkUsername();
+                        break;
+                    case 'email':
+                        checkEmail();
+                        break;
+                    case 'password':
+                        checkPassword();
+                        break;
+                    case 'confirm-password':
+                        checkConfirmPassword();
+                        break;
+                }
+            }));
+            // validate fields
+            let isUsernameValid = checkUsername(),
+                isEmailValid = checkEmail(),
+                isPasswordValid = checkPassword(),
+                isConfirmPasswordValid = checkConfirmPassword();
+
+            let isFormValid = isUsernameValid &&
+                isEmailValid &&
+                isPasswordValid &&
+                isConfirmPasswordValid;
+
+            // submit to the server if the form is valid
+            if (isFormValid) {
+                    flag=true;
+                    btnAnim();
+                    form.submit();
+            }
+        });
+        function btnAnim(){
+              if(flag)  document.getElementById('btn2').classList.toggle('btnSub');
+        }
+        var flag=false;
+        //max and min legth of unput
+        const isBetween = (length, min, max) => length < min || length > max ? false : true;
+        //The following isRequired() function returns true if the input argument is empty:
+        const isRequired = value => value === '' ? false : true;
+
+        //To check the email is valid, you’ll use a regular expression
+        const isEmailValid = (email) => {
+            const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            return re.test(email);
+        };
+
+        //To check if a password is strong, which match specified pattern, you’ll also use a regular expression:
+        const isPasswordSecure = (password) => {
+            const re = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})");
+            return re.test(password);
+        };
+        //The following showError() function highlights the border of the input field and displays an error message if the input field is invalid:
+        const showError = (input, message) => {
+            // get the form-field element
+            const formField = input.parentElement.parentElement;
+            // add the error class
+            formField.classList.remove('success');
+            formField.classList.add('error');
+
+            // show the error message
+            const error = formField.querySelector('small');
+            error.textContent = message;
+        }
+        //same like showError()
+        const showSuccess = (input) => {
+            // get the form-field element
+            const formField = input.parentElement.parentElement;
+
+            // remove the error class
+            formField.classList.remove('error');
+            formField.classList.add('success');
+
+            // hide the error message
+            const error = formField.querySelector('small');
+            error.textContent = '';
+        }
+        // checking Username
+        const checkUsername = () => {
+
+            let valid = false;
+            const min = 3,
+                max = 25;
+            const username = usernameEl.value.trim();
+
+            if (!isRequired(username)) {
+                showError(usernameEl, 'Username cannot be blank.');
+            } else if (!isBetween(username.length, min, max)) {
+                showError(usernameEl, `Username must be between ${min} and ${max} characters.`)
+            } else {
+                showSuccess(usernameEl);
+                valid = true;
+            }
+            return valid;
+        }
+        //function for checking valid phone number
+        const isPhoneValid = (ph) =>{
+          let re= new RegExp("^\\s*(?:\\+?(\\d{1,3}))?[-. (]*(\\d{3})[-. )]*(\\d{3})[-. ]*(\\d{4})(?: *x(\\d+))?\\s*$");
+          return re.test(ph);
+        };
+        //checking Email/Phone
+        const checkEmail = () => {
+            let valid = false;
+            const email = emailEl.value.trim();
+            if (!isRequired(email)) {
+                showError(emailEl, 'Email cannot be blank.');
+            } else if (!isNaN(email)){
+                if(!isPhoneValid(email)) {
+                    showError(emailEl, 'Phone Number is not valid.');
+                }else{
+                    showSuccess(emailEl);
+                    return true;
+                }
+            }else if(!isEmailValid(email)){
+                showError(emailEl, 'Email is not valid.');
+            }else {
+                showSuccess(emailEl);
+                valid = true;
+            }
+            return valid;
+        }
+        //Checking Password Fields
+        const checkPassword = () => {
+
+            let valid = false;
+
+            const password = passwordEl.value.trim();
+
+            if (!isRequired(password)) {
+                showError(passwordEl, 'Password cannot be blank.');
+            } else if (!isPasswordSecure(password)) {
+                showError(passwordEl, 'Password must has at least 8 characters that include at least 1 lowercase character, 1 uppercase characters, 1 number, and 1 special character in (!@#$%^&*)');
+            } else {
+                showSuccess(passwordEl);
+                valid = true;
+            }
+
+            return valid;
+        };
+        //Checking Confirm Password Field
+        const checkConfirmPassword = () => {
+            let valid = false;
+            // check confirm password
+            const confirmPassword = confirmPasswordEl.value.trim();
+            const password = passwordEl.value.trim();
+
+            if (!isRequired(confirmPassword)) {
+                showError(confirmPasswordEl, 'Please enter the password again');
+            } else if (password !== confirmPassword) {
+                showError(confirmPasswordEl, 'Confirm password does not match');
+            } else {
+                showSuccess(confirmPasswordEl);
+                valid = true;
+            }
+
+            return valid;
+        };
+
+        //END
+
+
+        window.onload = function () {
+            if ( /*[[${modalCheck.getCheckFlag()}]]*/"name" ==="SignUp") {
+                $('#exampleModal').modal("toggle");
+                // $('#exampleModal').modal("show");
+                // jQuery.noConflict();
+                // $('#myModal').modal('show');
+            }
+            if(/*[[${modalCheck.getCheckFlag()}]]*/"name"==="FailLogin"){
+                $('#exampleModal').modal("toggle");
+            }
+        }
+    </script>
+<!--    END HERE-->
+    <div th:insert="/fragments/footer :: footer"></div>
+</body>
+</html>

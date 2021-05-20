@@ -1,0 +1,15 @@
+textarea.input-lg.area-box-size {
+    height: 230px;
+    width: 80%;
+    outline: none;
+    background-color: rgba(4,4,43, 0.8);
+    color: white;
+    border-color: black;
+}
+
+@media (max-width:767px) {
+    textarea.input-lg.area-box-size {
+        height: 360px;
+    }
+}
+

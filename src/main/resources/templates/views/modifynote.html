@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+</head>
+
+<body>
+    <div th:fragment="modifynote">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#"><span>Home</span></a></li>
+        <li class="breadcrumb-item"><a href="#"><span>Library</span></a></li>
+        <li class="breadcrumb-item"><a href="#"><span>Data</span></a></li>
+    </ol>
+    <section class="highlight-phone">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="intro"><img class="img-fluid border rounded-pill shadow-sm" th:src="${user.getUser_image()}" width="80" height="80">
+                        <div th:if="${#strings.contains('__${username}__',' ')}">
+                            <h2 th:text="'Hello! '+${#strings.arraySplit('__${username}__',' ')[0].toUpperCase()}"></h2>
+                        </div>
+                        <div th:if="not ${#strings.contains('__${username}__',' ')}">
+                            <h2 th:text="'Hello! '+${#strings.toUpperCase('__${username}__')} "></h2>
+                        </div>
+                        <p>Dear, User this space is for adding and updating your notes. You can easily add your to-do, notes and tasks here. Also as per your need you can update your data.</p><a class="btn btn-primary" role="button" href="#" th:href="@{/backtoView}">Back To List</a>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="d-none d-md-block phone-mockup"><img class="device" src="assets/img/pngfind.com-peyton-list-png-5020179.png"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col">
+                <h2 class="text-center">Manage Your Notes</h2>
+            </div>
+        </div>
+        <div class="card" id="TableSorterCard">
+            <div class="card-header py-3">
+                <div class="row table-topper align-items-center">
+                    <div class="col-12 col-sm-5 col-md-6 text-left" style="margin: 0px;padding: 5px 15px;">
+                        <p class="text-primary m-0 font-weight-bold">Manage All your added notes/ to-do's/ tasks&nbsp;</p>
+                    </div>
+                    <div class="col-12 col-sm-7 col-md-6 text-right" style="margin: 0px;padding: 5px 15px;"><button class="btn btn-warning btn-sm" id="zoom_in" type="button" zoomclick="ChangeZoomLevel(-10);" style="margin: 2px;"><i class="fa fa-search-plus"></i></button><button class="btn btn-warning btn-sm" id="zoom_out" type="button" zoomclick="ChangeZoomLevel(-10);" style="margin: 2px;"><i class="fa fa-search-minus"></i></button></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="table-responsive">
+                        <table class="table table-striped table tablesorter" id="ipi-table">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th class="text-center">Note Description</th>
+                                    <th class="text-center">Date of creation</th>
+                                    <th class="text-center">Target date</th>
+                                    <th class="text-center">Priority</th>
+                                    <th class="text-center filter-false sorter-false">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-center">
+                                <tr>
+                                    <td data-id="1"><textarea th:placeholder="${user_note}" id="user_text" class="shadow-sm form-control-lg" name="user_data" placeholder="Write Your Notes Here" autofocus="" spellcheck="true"  style="background: rgba(255,255,255,0.4);color: var(--orange);" required></textarea></td>
+                                    <td class="text-center" th:text="${currentDate}"></td>
+                                    <td class="text-center"><input id="target_date" class="shadow-sm" type="date" name="user_target"></td>
+                                    <td class="text-center">
+                                        <div class="radio-toolbar">
+                                            <input type="radio" id="radioApple" name="user_priority" value="1" >
+                                            <label for="radioApple">High</label>
+
+                                            <input type="radio" id="radioBanana" name="user_priority" value="2" checked>
+                                            <label for="radioBanana">Medium</label>
+
+                                            <input type="radio" id="radioOrange" name="user_priority" value="3">
+                                            <label for="radioOrange">Low</label>
+                                        </div>
+                                    </td>
+                                    <td class="text-center">
+                                        <form action="#" onsubmit=" return doWork()" th:action="@{${action}}" th:object="${notes}" method="get">
+                                            <input type="hidden" id="in1" name="user_note" th:field="*{user_note}" value="" >
+                                            <input type="hidden" id="in2" name="target_date" th:field="*{target_date}" value="" >
+                                            <input type="hidden" id="in3" name="user_preference" th:field="*{user_preference}" value="">
+                                            <input type="hidden" name="create_date"  value="date" th:value="${currentDate}">
+                                            <input type="hidden" name="note_id" value="name"  th:value="${note_id}">
+                                        <button th:text="${buttonText}" type="submit" class="btn btn-success text-monospace shadow-sm" data-bss-hover-animate="swing" id="savenupdate" style="background: #00acee;margin: 2px;padding: 5px 15px;transform: perspective(0px);border-radius: 8px;border-width: 3px;border-color: var(--gray);">
+                                        </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        <script>
+            function doWork(){
+                const textvalue = document.getElementById("user_text").value;
+                if(textvalue.length===0){
+                    alert("Description Shouldn't be Empty");
+                    return false;
+                }
+                document.getElementById("in1").setAttribute("value",textvalue);
+                let v1= document.querySelector("input[type='date']").value;
+                document.getElementById("in2").setAttribute("value",v1);
+                let ele=document.getElementsByName("user_priority");
+                let temp=0;
+                for (let i=0;i<ele.length;i++){
+                    if(ele[i].checked){
+                        document.getElementById("in3").setAttribute("value",ele[i].value);
+                        temp++;
+                    }
+                }
+                return true;
+            }
+        </script>
+    </div>
+</body>
+
+</html>
