@@ -27,7 +27,9 @@ public class Covid19Controller {
     public ModelAndView getDistricts(HttpServletRequest req) throws IOException, InterruptedException {
         String state_id = req.getParameter("state_id");
         var url="https://cdn-api.co-vin.in/api/v2/admin/location/districts/"+state_id;
-        var request= HttpRequest.newBuilder().GET().uri(URI.create(url)).header("user-agent", "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36").build();
+        var request= HttpRequest.newBuilder().GET().uri(URI.create(url))
+                .headers("content-type","application/json","user-agent","Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36","Accept-Language","en_US")
+                .build();
         var client= HttpClient.newBuilder().build();
         var response= client.send(request, HttpResponse.BodyHandlers.ofString());
         JSONObject js= new JSONObject(response.body());
@@ -53,7 +55,9 @@ public class Covid19Controller {
         String[] split = date.split("-");
         String date2=split[2]+"-"+split[1]+"-"+split[0];
         var url="https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/findByDistrict?district_id="+dist_id+"&date="+date2;
-        var request= HttpRequest.newBuilder().GET().uri(URI.create(url)).header("user-agent", "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36").build();
+        var request= HttpRequest.newBuilder().GET().uri(URI.create(url))
+                .headers("content-type","application/json","user-agent","Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36","Accept-Language","en_US")
+                .build();
         var client= HttpClient.newBuilder().build();
         var response= client.send(request, HttpResponse.BodyHandlers.ofString());
         JSONObject js= new JSONObject(response.body());

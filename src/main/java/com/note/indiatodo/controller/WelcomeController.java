@@ -33,7 +33,9 @@ public class WelcomeController {
     @RequestMapping("/covidgo")
     public ModelAndView covidRedirect() throws IOException, InterruptedException {
         var url="https://cdn-api.co-vin.in/api/v2/admin/location/states";
-        var request= HttpRequest.newBuilder().GET().uri(URI.create(url)).header("user-agent", "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36").build();
+        var request= HttpRequest.newBuilder().GET().uri(URI.create(url))
+                .headers("content-type","application/json","user-agent","Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36","Accept-Language","en_US")
+                .build();
         var client= HttpClient.newBuilder().build();
         var response= client.send(request, HttpResponse.BodyHandlers.ofString());
         JSONObject js= new JSONObject(response.body());
@@ -42,7 +44,6 @@ public class WelcomeController {
         mv.setViewName("CovidEntry");
         mv.addObject("count",0);
         mv.addObject("stateList",statesArr);
-        System.out.println(statesArr.getJSONObject(0).get("state_name"));
         return mv;
     }
 }
