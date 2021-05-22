@@ -63,7 +63,7 @@
                             </thead>
                             <tbody class="text-center">
                                 <tr>
-                                    <td data-id="1"><textarea th:placeholder="${user_note}" id="user_text" class="shadow-sm form-control-lg" name="user_data" placeholder="Write Your Notes Here" autofocus="" spellcheck="true"  style="background: rgba(255,255,255,0.4);color: var(--orange);" required></textarea></td>
+                                    <td data-id="1"><textarea th:value="${user_note}" id="user_text" class="shadow-sm form-control-lg" name="user_data" placeholder="Write Your Notes Here" autofocus="" spellcheck="true"  style="background: rgba(255,255,255,0.4);color: var(--orange);" required></textarea></td>
                                     <td class="text-center" th:text="${currentDate}"></td>
                                     <td class="text-center"><input id="target_date" class="shadow-sm" type="date" name="user_target"></td>
                                     <td class="text-center">
