@@ -82,7 +82,7 @@ public class UserController {
     }
 
     @PostMapping("/signin")
-    public ModelAndView getUserData(@ModelAttribute("loginVal") LoginUserValid loginUserValid,
+    public ModelAndView getUserData(@ModelAttribute("loginValue") LoginUserValid loginUserValid,
                                     HttpServletRequest req,
                                     HttpServletResponse res) {
         Users userData = null;

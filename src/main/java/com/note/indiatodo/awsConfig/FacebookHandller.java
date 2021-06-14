@@ -1,0 +1,6 @@
+package com.note.indiatodo.awsConfig;
+
+public class FacebookHandller {
+    String accessToken="EAAFEaZA6ZBN3EBAEpn8dIZBNnySV12n9KZCsaOpFTr1r66artLYtVLRjFSEnJ2q8T0I7k4Qgr4156rvRGYOV4ZC6pF8T8fXZA56ef63KHE5RWplnVAtloZC5L18ZBFvLhTo5vc8ttemQukHQYPRJib8vh26LlPSZAKKLGusk7kUVthi82CHEnWVjs45PlknnDpdmgjNjAecJ6rbN6YcZBaOeiV";
+
+}
