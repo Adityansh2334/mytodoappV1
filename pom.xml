@@ -18,17 +18,20 @@
         <java.version>11</java.version>
     </properties>
     <dependencies>
+        <!-- Bucket4j used for limit the rate of calling APIs.-->
         <dependency>
             <groupId>com.github.vladimir-bukhtoyarov</groupId>
             <artifactId>bucket4j-core</artifactId>
             <version>4.10.0</version>
         </dependency>
+        <!-- jackson-databind used for bind/map the JSON Object with an Object-->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
             <version>2.11.2</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.json/json -->
+        <!-- JSON used for make the response body to an JSON Object-->
         <dependency>
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>
@@ -38,21 +41,30 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
+        <!-- Thymeleaf is a server-side template engine created for
+        Java-based applications. It was designed to process several types of files:
+        HTML, XML, JavaScript, CSS, Text and RAW Data. The main advantage of using
+        Thymeleaf is that templates created with this engine can be easily used as web
+        design prototypes. Injected Thymeleaf logic doesn’t affect the template because
+        Thymeleaf uses simple HTML attributes. Spring Boot includes auto-configuration
+        support for the engine, what makes integration really simple. -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-
+        <!-- DeV tool used for autostart my server when we change in implementation -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
             <scope>runtime</scope>
             <optional>true</optional>
         </dependency>
+        <!--MySQL driver/Connector to connect with mysql db -->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
@@ -68,23 +80,37 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+
+        <!--Amazon S3 Bucket Storage Service-->
         <!-- https://mvnrepository.com/artifact/com.amazonaws/aws-java-sdk-s3 -->
         <dependency>
             <groupId>com.amazonaws</groupId>
             <artifactId>aws-java-sdk-s3</artifactId>
             <version>1.11.1016</version>
         </dependency>
+
+        <!-- Amazon Storage Service -->
+        <!-- https://mvnrepository.com/artifact/com.azure/azure-storage-blob -->
+        <dependency>
+            <groupId>com.azure</groupId>
+            <artifactId>azure-storage-blob</artifactId>
+            <version>12.15.0</version>
+        </dependency>
+
+
         <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-core -->
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
             <version>5.4.31.Final</version>
         </dependency>
+        <!-- Hibernate Validator allows to express and validate application constraints. -->
         <dependency>
             <groupId>org.hibernate.validator</groupId>
             <artifactId>hibernate-validator</artifactId>
             <version>6.1.6.Final</version>
         </dependency>
+        <!-- We use commons- fileupload to upload files from html page -->
         <dependency>
             <groupId>commons-fileupload</groupId>
             <artifactId>commons-fileupload</artifactId>
@@ -108,6 +134,18 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>com.microsoft.azure</groupId>
+                <artifactId>azure-webapp-maven-plugin</artifactId>
+                <version>1.2.0</version>
+                <configuration>
+                    <resourceGroup>Test_TODO</resourceGroup>
+                    <appName>mytodoapp2022</appName>
+                    <linuxRuntime>jre11</linuxRuntime>
+                    <region>australiacentral</region>
+                    <deploymentType>war</deploymentType>
+                </configuration>
             </plugin>
         </plugins>
     </build>
