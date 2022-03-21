@@ -18,6 +18,8 @@ jobs:
       - uses: azure/login@v1
         with:
          creds: ${{ secrets.AZURE_CREDENTIALS }}
+        env:
+         credentials: ${{ secrets.AZURE_CREDENTIALS }}
          
       - uses: azure/CLI@v1
         with:
@@ -25,7 +27,7 @@ jobs:
           inlineScript: |
               az account show
               az storage -h   
-
+    
       - uses: azure/mysql@v1
         with:
           server-name: MYSQL_SERVER_NAME
