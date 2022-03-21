@@ -18,12 +18,19 @@ jobs:
       - uses: azure/login@v1
         with:
          creds: ${{ secrets.AZURE_CREDENTIALS }}
-         allow-no-subscriptions: true
+         
+      - uses: azure/CLI@v1
+        with:
+          azcliversion: 2.0.72
+          inlineScript: |
+              az account show
+              az storage -h   
 
       - uses: azure/mysql@v1
         with:
           server-name: MYSQL_SERVER_NAME
           connection-string: ${{ secrets.AZURE_MYSQL_CONNECTION_STRING }}
+          
               
       - name: Set up Java version
         uses: actions/setup-java@v1
