@@ -8,6 +8,7 @@ public class IndiatodoApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(IndiatodoApplication.class, args);
+        
     }
 
 }
